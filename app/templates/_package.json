@@ -1,0 +1,8 @@
+{
+  "name": "<%= packageName %>",
+  "main": "index.<%= useCoffee ? 'coffee' : 'js' %>",
+  "version": "0.0.0",
+  "description": "<%= description %>",
+  "license": "MIT",
+  "dependencies": {}
+}
