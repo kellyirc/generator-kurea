@@ -6,19 +6,21 @@ var yosay = require('yosay');
 var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
-_.str = require('underscore.string')
+_.str = require('underscore.string');
 
 var defaultBaseName = path.basename(process.cwd());
-if(defaultBaseName.indexOf('kurea-contrib') == 0)
+if(defaultBaseName.indexOf('kurea-contrib') === 0) {
+
+}
   defaultBaseName = defaultBaseName.substr(13);
 
 module.exports = yeoman.generators.Base.extend({
 
   constructor: function() {
     yeoman.generators.Base.apply(this, arguments);
-    this.option("coffee", {
-      desc: "Generate a project for CoffeeScript",
-      type: "boolean",
+    this.option('coffee', {
+      desc: 'Generate a project for CoffeeScript',
+      type: 'boolean',
       default: false
     });
   },
@@ -30,7 +32,7 @@ module.exports = yeoman.generators.Base.extend({
   prompting: function () {
     var done = this.async();
 
-    this.useCoffee = !!this.options['coffee'];
+    this.useCoffee = !!this.options.coffee;
 
 
     // Have Yeoman greet the user.
@@ -43,13 +45,13 @@ module.exports = yeoman.generators.Base.extend({
         type: 'input',
         name: 'author',
         message: 'Who is the author?',
-        default: "Abraham Lincoln"
+        default: 'Abraham Lincoln'
       },
       {
         type: 'input',
         name: 'githubUsername',
         message: 'What is your Github username?',
-        default: "abelincloln"
+        default: 'abelincloln'
       },
       {
         type: 'input',
@@ -61,17 +63,18 @@ module.exports = yeoman.generators.Base.extend({
         type: 'input',
         name: 'description',
         message: 'Describe what your module does.',
-        default: "A module for Kurea."
+        default: 'A module for Kurea.'
       }
     ];
 
-    if(!this.useCoffee)
+    if(!this.useCoffee) {
       prompts.push({
         type: 'confirm',
         name: 'useCoffee',
-        message: "Would you like to use CoffeeScript?",
+        message: 'Would you like to use CoffeeScript?',
         default: true
       });
+    }
 
     this.prompt(prompts, function (props) {
       this.someOption = props.someOption;
@@ -79,14 +82,16 @@ module.exports = yeoman.generators.Base.extend({
         this[key] = props[key];
       }
       this.commandName = _.str.dasherize(this.baseName);
-      if(this.commandName[0] == '-')
+      if(this.commandName[0] === '-'){
         this.commandName = this.commandName.substr(1);
+      }
       this.className = _.str.classify(this.commandName);
       this.packageName = 'kurea-contrib-' + this.commandName;
 
-      this.pathPrefix = 'kurea-contrib-'+this.commandName+'/'
-      if(defaultBaseName == this.baseName && fs.readdirSync('.').length == 0)
-        this.pathPrefix = './'
+      this.pathPrefix = 'kurea-contrib-'+this.commandName+'/';
+      if(defaultBaseName === this.baseName && fs.readdirSync('.').length === 0) {
+        this.pathPrefix = './';
+      }
 
       done();
     }.bind(this));
@@ -96,12 +101,14 @@ module.exports = yeoman.generators.Base.extend({
     app: function () {
       this.template('_package.json', this.pathPrefix+'package.json');
       this.template('_README.md', this.pathPrefix+'README.md');
-      this.src.copy('_.gitignore', this.pathPrefix+'.gitignore')
-      this.src.copy('_.npmignore', this.pathPrefix+'.npmignore')
-      if(this.useCoffee)
+      this.src.copy('_.gitignore', this.pathPrefix+'.gitignore');
+      this.src.copy('_.npmignore', this.pathPrefix+'.npmignore');
+      if(this.useCoffee) {
         this.template('_index.coffee', this.pathPrefix+'index.coffee');
-      else
+      }
+      else {
         this.template('_index.js', this.pathPrefix+'index.js');
+      }
     },
 
   },
