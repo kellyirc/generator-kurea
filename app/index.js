@@ -101,6 +101,7 @@ module.exports = yeoman.generators.Base.extend({
     app: function () {
       this.template('_package.json', this.pathPrefix+'package.json');
       this.template('_README.md', this.pathPrefix+'README.md');
+      this.template('_LICENSE', this.pathPrefix+'LICENSE');
       this.src.copy('_.gitignore', this.pathPrefix+'.gitignore');
       this.src.copy('_.npmignore', this.pathPrefix+'.npmignore');
       if(this.useCoffee) {
